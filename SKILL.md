@@ -1,31 +1,32 @@
 ---
 name: lov-illustrate
-description: >
-  为 Markdown 文档规划、检索、生成和组装可溯源插图，并验证图片内容、
-  程序化排版和 CJK 字体回退。Use when the user asks to “给文章配图”、
-  “补插图”、“生成文章插画”、“illustrate this document”，或需要为长文建立
-  真实素材、数据图表、程序化合成图与 AI 概念图的统一视觉节奏。
 license: MIT
-compatibility: >
-  Requires network-capable search/download tools for retrieved assets and an image-generation
-  capability for abstract illustrations. Programmatic HTML typography audits require Python 3.9+,
-  Playwright, and Chromium or Google Chrome; if unavailable, use equivalent browser font
-  introspection and report the typography gate as incomplete.
+compatibility: 'Requires network-capable search/download tools for retrieved assets
+  and an image-generation capability for abstract illustrations. Programmatic HTML
+  typography audits require Python 3.9+, Playwright, and Chromium or Google Chrome;
+  if unavailable, use equivalent browser font introspection and report the typography
+  gate as incomplete.
+
+  '
 depends_on:
-  - lov-branding-consistency
+- lov-branding-consistency
+description: 依据文档内容选择真实素材、图表或生成图并校验插入位置。支持明确输入与结果回读。Use to illustrate a document with
+  evidence and relevant images.
 metadata:
   author: contributors
-  version: "2.6.0"
+  version: 2.6.3
   tags:
-    - illustration
-    - markdown
-    - editorial
-    - cjk
-    - typography
-    - provenance
+  - illustration
+  - markdown
+  - editorial
+  - cjk
+  - typography
+  - provenance
+  content_class: microcopy
+  card_standard: lovstudio/skill-card/v1
 ---
 
-# Illustrate - 文档智能配图
+# 图解文档 · Document Visuals
 
 为 Markdown 文档智能分析插图位置，并行生成/检索图片，输出带插图的增强版文档。
 
@@ -141,14 +142,14 @@ Hero 只在它能提供封面之外的新信息、建立强现场或显著提升
 
 ### Step 4: 用户确认（除非 --auto）
 
-使用 AskUserQuestion 展示插图方案表格，让用户：
+使用 宿主的聚焦提问工具 展示插图方案表格，让用户：
 - 确认/删除/调整每个插图位置和类型
 - 选项：「全部确认」「我来调整后继续」
 
 ### Step 5: 数据调研（如有数据图表类型）
 
 如果方案中包含「数据图表」类型的插图：
-1. 使用 Task 工具并行调研每个数据主题，获取**带来源的精确数据点**
+1. 逐项调研每个数据主题，获取**带来源的精确数据点**
 2. 汇总数据表格，展示给用户确认数据准确性
 3. 确认后再生成图表
 
@@ -270,10 +271,25 @@ Step 3 规划的是章节级粗略位置，Step 7 组装时必须精确到段落
    不为凑齐网格复制帧。
 7. **情绪高潮**：优先真实照片、对话或结果；生成式插图不能替代真实关系与现场。
 
+
+
+## Execution boundary
+
+自然语言请求即可触发；无需旧 slash 路径、参数插值或指定助手。明确解析当前请求中的
+项目、目标文件、选项与输出位置；用当前宿主实际提供的文件、搜索、CLI 和浏览器能力。
+项目依赖版本与外部 API 在执行时核实，不能假设示例是现行配置。随包脚本从 Skill 根解析，
+业务文件从目标项目根解析。先读当前状态，保护已有未提交内容与其他任务的暂存区。
+分析、预览请求保持只读；修改、提交、推送、部署和发布各依当前请求的明确范围执行。
+不绕过保护、自动发送消息、强制结束用户进程或抢前台。失败保留可诊断原始错误。
+
+## Composition
+
+执行前读取 [能力组合](references/skill-composition.md)，按明确制品交接相邻能力。
+
 ## Runtime context (shared)
 
-运行前读取本 Skill 包的 `skill.yaml`，由宿主提供 `skill-runtime/v1` 上下文。字段解析顺序为：当前请求、项目上下文、个人 Preferences、品牌 Profile、通用默认值。
-
-- 只使用 Manifest 声明的字段；Profile 保存公开品牌事实，Preferences 保存个人工作偏好。
-- `required: true` 字段缺失时，按 Manifest 的问题配置向用户提出一个聚焦问题；用户明确同意后再保存回答。
-- 报错提供可复制的 `context_id`、字段路径与来源，诊断内容避开秘密、完整私人路径和原始配置。
+运行前读取本包 `skill.yaml` 与 [Profile 合同](references/user-profile.md)。优先级为当前请求、
+项目上下文、本 Skill records、共享 preferences、brand/user Profile、安全默认值。
+只读取声明字段；没有专用运行时的宿主可使用 `scripts/profile_store.py` 读取共享 Profile。
+配置缺失只问影响结果的一个问题。用户明确要求长期保存的值通过该脚本原子写入，
+报告实际路径；不保存推断、凭据或其他任务的资料。

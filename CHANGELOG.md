@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.6.3] - 2026-09-07
+
+### Added
+
+- 统一展示名为「图解文档」，保持调用 ID 与能力契约。
+
+## [2.6.2] - 2026-09-07
+
+- 修正 README 的过期状态版本和本地安装路径，补充自然语言调用与官网安装命令。
+
+## [2.6.1] - 2026-09-07
+
+- 将历史 slash command 升级为通用 Skill，补全自然语言触发、显式输入、共享 Profile 与验收边界。
+- 保留业务目的，修正宿主耦合和不安全的隐式动作；迁移案例与实际业务验收分别记录。
+
+
 All notable changes to this skill are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: [SemVer](https://semver.org/)
 
