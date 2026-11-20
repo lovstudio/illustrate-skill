@@ -1,6 +1,6 @@
 # 图解文档 · Document Visuals
 
-![Version](https://img.shields.io/badge/version-2.6.3-CC785C)
+![Version](https://img.shields.io/badge/version-2.6.4-CC785C)
 
 > 为md文档智能添加插图，提升可读性
 
@@ -11,7 +11,7 @@ fallback 回读门禁，避免缺字或混用字体被固化进 PNG/JPG。
 ## Installation
 
 ```bash
-npx skills add lov-illustrate -g -y
+npx lovstudio skills add illustrate -g -y
 ```
 
 ## Invocation
